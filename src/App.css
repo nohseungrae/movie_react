@@ -5,7 +5,7 @@ body {
   margin: 0;
   padding: 0;
   /* font-family: -apple-system; */
-  background-color: #fff;
+  background-color: #eff3f7;
   height: 100%;
 }
 html,
@@ -23,23 +23,4 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.movies_movie {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 50px;
-  width: 80%;
-}
-.movies_movie .movie {
-  width: 45%;
-  background-color: #fff;
-  margin-bottom: 70px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.movie img {
-  max-width: 200px;
 }
