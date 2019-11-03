@@ -1,65 +1,67 @@
 import React from "react";
 import PropTypes from "prop-types";
-const foodILike = [
-  {
-    id: 1,
-    name: "김치",
-    image: "https://i.ytimg.com/vi/eTucCw1w6Ak/maxresdefault.jpg",
-    rating: 4.5
-  },
-  {
-    id: 2,
-    name: "삼겹살",
-    image:
-      "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ffile.namu.moe%2Ffile%2F58fc0c4a323fef2482b19533e67def3f358763bd3bc18414d0ae202817a5fa1b&f=1&nofb=1",
-    rating: 4
-  },
-  {
-    id: 3,
-    name: "라면",
-    image:
-      "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fimg.ezmember.co.kr%2Fcache%2Fboard%2F2014%2F04%2F09%2F731f857cf33b497024783159e3f0566e.jpg&f=1&nofb=1",
-    rating: 5
-  },
-  {
-    id: 4,
-    name: "부대찌개",
-    image:
-      "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2FeNUokgC9HnU%2Fmaxresdefault.jpg&f=1&nofb=1",
-    rating: 1
+import axios from "axios";
+import Movies from "./Movies";
+class App extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   console.log("im constructor");
+  // }
+  // state = {
+  //   count: 0
+  // };
+  // add = () => {
+  //   this.setState(current => ({ count: current.count + 1 }));
+  // };
+  // miuns = () => {
+  //   this.setState(current => ({ count: current.count - 1 }));
+  // };
+  // componentDidMount() {
+  //   console.log("im componentDidMount");
+  // }
+  // componentDidUpdate() {
+  //   console.log("im componentDidUpdate");
+  // }
+  state = {
+    isLoading: true,
+    movies: []
+  };
+  getMovies = async () => {
+    const {
+      data: {
+        data: { movies }
+      }
+    } = await axios.get(
+      "https://yts-proxy.now.sh/list_movies.json?sort_by=rating"
+    );
+    this.setState({ movies: movies, isLoading: false });
+    console.log(movies);
+  };
+  componentDidMount() {
+    this.getMovies();
   }
-];
-
-const Food = ({ fav, picture, rating }) => {
-  console.log(fav);
-  return (
-    <div>
-      <h1>I like {fav}</h1>
-      <h4>{rating}/5.0</h4>
-      <img src={picture} alt={fav} />
-    </div>
-  );
-};
-
-Food.propTypes = {
-  fav: PropTypes.string.isRequired,
-  picture: PropTypes.string.isRequired,
-  rating: PropTypes.number
-};
-
-const App = () => {
-  return (
-    <div>
-      {foodILike.map(dish => (
-        <Food
-          key={dish.id}
-          fav={dish.name}
-          picture={dish.image}
-          rating={dish.rating}
-        />
-      ))}
-    </div>
-  );
-};
+  render() {
+    console.log("im render");
+    const { isLoading, movies } = this.state;
+    return (
+      <div>
+        {isLoading
+          ? "Loading"
+          : movies.map(movie => {
+              return (
+                <Movies
+                  key={movie.id}
+                  id={movie.id}
+                  year={movie.year}
+                  title={movie.title}
+                  summary={movie.summary}
+                  poster={movie.medium_cover_image}
+                />
+              );
+            })}
+      </div>
+    );
+  }
+}
 
 export default App;
