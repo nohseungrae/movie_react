@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./Movie.css"
-const Movie = ({ id, year, title, summary, poster, genres }) => {
+const Movie = ({ year, title, summary, poster, genres }) => {
   return (
     <div className="movie">
       <img src={poster} alt={title} />
